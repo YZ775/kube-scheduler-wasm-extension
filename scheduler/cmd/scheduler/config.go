@@ -17,7 +17,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 
@@ -34,17 +33,10 @@ import (
 
 // getWasmPluginsFromConfig parses the scheduler configuration specified with --config option,
 // and return the wasm plugins enabled by the user.
-func getWasmPluginsFromConfig() ([]string, error) {
+func getWasmPluginsFromConfig(configFile string) ([]string, error) {
 	// In the scheduler, the path to the scheduler configuration is specified with --config option.
-	configFile := flag.String("config", "", "")
-	flag.Parse()
 
-	if configFile == nil {
-		// Users don't have the own configuration. do nothing.
-		return nil, nil
-	}
-
-	cfg, err := loadConfigFromFile(*configFile)
+	cfg, err := loadConfigFromFile(configFile)
 	if err != nil {
 		return nil, err
 	}
